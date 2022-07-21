@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<% let json = require('./dataset.json') %>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= json.page_meta.title %></title>
+    <link type="image/png" rel="icon" href="./favicon/favicon.ico">
+    <meta name="description" content="<%= json.page_meta.meta_description %>">
+    <meta name="keywords" content="<%= json.page_meta.meta_keywords %>"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="header__top">
+            <div class="header__logo">
+                <img src="<%= require('./images/logo.svg') %>" alt="logo">
+
+            </div>
+        </div>
+        <div class="header__bottom container">
+            <nav class="header__menu">
+                <%
+                let nav = `<ul class="header__menu-wrapper">`
+                json.nav.forEach(item => {
+                    nav += `<li class="menu__item"><a href="${item.href}" class="menu__link">${item.text}</a></li>`
+                })
+                nav += '</ul>'
+                %>
+                <%= nav %>
+            </nav>
+        </div>
+    </div>
+</header>
+<section>
+    <div class="container">
+        <div class="breadcrumbs">
+            <%
+            let ul = `<ul class="breadcrumbs__wrapper">`
+            json.breadcrumbs.forEach(item => {
+                ul += `<li class="breadcrumbs__item"><a class="breadcrumbs__link" href="${item.href}">${item.text}</a></li>`
+            })
+            ul += '</ul>'
+            %>
+            <%= ul %>
+        </div>
+    </div>
+</section>
+
+
+<main class="main">
+    <div class="container">
+        <h1 class="main__title"><%= json.page_meta.h1 %></h1>
+        <div class="main__content">
+            <div class="main__cards">
+                <%= require('./stock') %>
+            </div>
+        </div>
+    </div>
+</main>
+<article class="article">
+<div class="container">
+    <%
+    let box = '<div class="article__box">'
+    json.page_text.forEach(item => {
+        box += `<${item.tag} class="article__text">${item.content}</${item.tag}>`
+    })
+    box += '</div>'
+    %>
+    <%= box %>
+</div>
+</article>
+<footer>
+    <div class="container">
+        <div class="footer_wrapper">
+            <p class="copyright">© 2019 - <a class="copyright__policy" href="#">Privacy Policy</a> - Terms and Conditions</p>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>
